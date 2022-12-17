@@ -4,14 +4,16 @@ import { nanoid } from "nanoid";
 const INITIAL_STATE = {
   contacts: [],
   name: '',
-  number: ''
+  number: '',
+  filter: ''
 }
 export class App extends Component {
   state = {
     ...INITIAL_STATE,
     contacts: [{name: 'test-1',number: '5555-55', id: 1}, {name: 'test-2',number: '00000-00', id: 2}],
     name: '',
-    number: ''
+    number: '',
+    filter: ''
   }
 
   nameContact = (event) => {
@@ -22,6 +24,10 @@ export class App extends Component {
     this.setState({number: event.target.value})
   }
 
+  filterContact = (event) => {
+    this.setState({filter: event.target.value})
+  }
+
   sendContact = (event) => {
     event.preventDefault()
     const form = event.currentTarget      
@@ -30,17 +36,25 @@ export class App extends Component {
     const contactId = nanoid()
     const newContact = { name, number, id: contactId }
 
-    this.setState(preState => {
+    this.setState(({contacts}) => {
       return { 
-        contacts: [...preState.contacts, newContact]
+        contacts: [...contacts, newContact]
       }
     })
 
     form.reset()
   }
 
+  showContacts = () => {
+    const fullBaseContacts = this.state.contacts
+    const findName = this.state.filter.toLowerCase()
+
+    return fullBaseContacts.filter(({name})=> name.toLowerCase().includes(findName))
+  }
+
   render() {
-    console.log(this.state)
+    const visibleContacts = this.showContacts()
+    
     return <div
       style={{
         height: '100vh',
@@ -51,7 +65,7 @@ export class App extends Component {
       }}
     >      
       <Title title="Phonebook" children={<Form sendContact={this.sendContact} nameContact={this.nameContact} numberContact={this.numberContact} />} />      
-      <Title title="Contacts" children={<ListContacts arrayContacts={this.state.contacts} />}/>
+      <Title title="Contacts" children={<ListContacts arrayContacts={visibleContacts} filterContact={this.filterContact} />}/>
     </div>
   }
 }
@@ -91,10 +105,13 @@ const Form = ({sendContact, nameContact, numberContact}) => {
           </form>
 }
 
-const ListContacts = ({arrayContacts}) => {
-  return <ul>
-    {arrayContacts.map(item => <Contact contact={item} key={item.id} />)}
+const ListContacts = ({arrayContacts, filterContact}) => {
+  return <div>
+        <Filter filterContact={filterContact} />
+        <ul>
+          {arrayContacts.map(item => <Contact contact={item} key={item.id} />)}
         </ul>
+      </div>
 }
 
 const Contact = ({ contact }) => {
@@ -102,4 +119,17 @@ const Contact = ({ contact }) => {
   return <li>
           {name} : {number}
         </li>
+}
+
+const Filter = ({filterContact}) => {
+  return <label>
+          Find contacts by name
+          <input
+            onChange={filterContact}
+            type="text"
+            name="find"
+            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+            title="Name may contain only letters, apostrophe, dash and spaces."
+          />
+        </label>
 }
