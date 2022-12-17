@@ -1,5 +1,8 @@
 import { Component } from "react";
 import { nanoid } from "nanoid";
+import { Form } from "components/Form";
+import { ListContacts } from "components/ListContacts";
+import { Title } from "components/Title";
 
 const INITIAL_STATE = {
   contacts: [],
@@ -63,73 +66,10 @@ export class App extends Component {
         justifyContent: 'center',
         alignItems: 'center',
       }}
-    >      
+    >
+      <h1>My favorite</h1>    
       <Title title="Phonebook" children={<Form sendContact={this.sendContact} nameContact={this.nameContact} numberContact={this.numberContact} />} />      
       <Title title="Contacts" children={<ListContacts arrayContacts={visibleContacts} filterContact={this.filterContact} />}/>
     </div>
   }
-}
-
-const Title = ({title, children}) => {
-  return <div>
-    <h2>{title}</h2>
-    {children}
-  </div>
-}
-
-const Form = ({sendContact, nameContact, numberContact}) => {
-  return <form onSubmit={sendContact}>
-            <label>
-              Name:
-              <input
-                onChange={nameContact}
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-                required
-              />
-            </label>
-            <label>
-              Number:
-              <input
-                onChange={numberContact}
-                type="tel"
-                name="number"
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-                required
-              />
-            </label>
-            <button type="submit">Add contact</button>
-          </form>
-}
-
-const ListContacts = ({arrayContacts, filterContact}) => {
-  return <div>
-        <Filter filterContact={filterContact} />
-        <ul>
-          {arrayContacts.map(item => <Contact contact={item} key={item.id} />)}
-        </ul>
-      </div>
-}
-
-const Contact = ({ contact }) => {
-  const {name, number} = contact
-  return <li>
-          {name} : {number}
-        </li>
-}
-
-const Filter = ({filterContact}) => {
-  return <label>
-          Find contacts by name
-          <input
-            onChange={filterContact}
-            type="text"
-            name="find"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces."
-          />
-        </label>
 }
