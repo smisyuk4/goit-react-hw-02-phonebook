@@ -1,5 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
+import { Report } from 'notiflix/build/notiflix-report-aio';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const INITIAL_STATE = {
     name: '',
@@ -30,9 +32,29 @@ export class Form extends Component {
         const contactId = nanoid();
         const newContact = { name, number, id: contactId };
 
-        //move data to App
-        this.props.onSubmit(newContact);
-        this.resetInputs();
+        //check uniq contact
+        if (!this.checkUniq(name)) {
+            //move data to App
+            this.props.onSubmit(newContact);
+            Notify.success(
+                'Congratulations, the contact has been sent to storage',
+                { position: 'center-top' }
+            );
+            this.resetInputs();
+        } else {
+            Report.warning(
+                'Sorry',
+                'Not a unique contact - write a new one!',
+                'Okay'
+            );
+        }
+    };
+
+    checkUniq = name => {
+        const contactsBase = this.props.contactsBase;
+        const newName = name.toLowerCase();
+
+        return contactsBase.find(({ name }) => name.toLowerCase() === newName);
     };
 
     render() {
