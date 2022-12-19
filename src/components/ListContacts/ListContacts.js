@@ -1,13 +1,22 @@
 import { Filter } from 'components/Filter';
 import { Contact } from 'components/Contact';
 
-export const ListContacts = ({ arrayContacts, filterContact, filter }) => {
+export const ListContacts = ({
+    arrayContacts,
+    filterContact,
+    filter,
+    onClickBtnRemove,
+}) => {
     return (
         <div>
             <Filter filterContact={filterContact} filter={filter} />
             <ul>
                 {arrayContacts.map(item => (
-                    <Contact contact={item} key={item.id} />
+                    <Contact
+                        contact={item}
+                        key={item.id}
+                        onClickBtnRemove={onClickBtnRemove}
+                    />
                 ))}
             </ul>
         </div>

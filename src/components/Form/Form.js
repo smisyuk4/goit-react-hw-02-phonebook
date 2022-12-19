@@ -36,10 +36,9 @@ export class Form extends Component {
         if (!this.checkUniq(name)) {
             //move data to App
             this.props.onSubmit(newContact);
-            Notify.success(
-                'Congratulations, the contact has been sent to storage',
-                { position: 'center-top' }
-            );
+            Notify.success('The contact has been sent to storage', {
+                position: 'center-top',
+            });
             this.resetInputs();
         } else {
             Report.warning(
