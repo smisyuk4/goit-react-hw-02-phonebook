@@ -2,6 +2,13 @@ import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { Report } from 'notiflix/build/notiflix-report-aio';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
+import { IconContext } from 'react-icons';
+import {
+    RiContactsFill,
+    RiUserVoiceFill,
+    RiUserFollowFill,
+} from 'react-icons/ri';
+import { FormWrp, InputForm, LabelForm, ButtonForm } from './Form.styled';
 
 const INITIAL_STATE = {
     name: '',
@@ -58,10 +65,13 @@ export class Form extends Component {
 
     render() {
         return (
-            <form onSubmit={this.sendContact}>
-                <label>
+            <FormWrp onSubmit={this.sendContact}>
+                <LabelForm>
+                    <IconContext.Provider value={{ className: 'global-icon' }}>
+                        <RiContactsFill />
+                    </IconContext.Provider>
                     Name:
-                    <input
+                    <InputForm
                         onChange={this.changeState}
                         value={this.state.name}
                         type="text"
@@ -70,10 +80,13 @@ export class Form extends Component {
                         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
                         required
                     />
-                </label>
-                <label>
+                </LabelForm>
+                <LabelForm>
+                    <IconContext.Provider value={{ className: 'global-icon' }}>
+                        <RiUserVoiceFill />
+                    </IconContext.Provider>
                     Number:
-                    <input
+                    <InputForm
                         onChange={this.changeState}
                         value={this.state.number}
                         type="tel"
@@ -82,9 +95,14 @@ export class Form extends Component {
                         title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
                         required
                     />
-                </label>
-                <button type="submit">Add contact</button>
-            </form>
+                </LabelForm>
+                <ButtonForm type="submit">
+                    <IconContext.Provider value={{ className: 'global-icon' }}>
+                        <RiUserFollowFill />
+                    </IconContext.Provider>
+                    Add contact
+                </ButtonForm>
+            </FormWrp>
         );
     }
 }

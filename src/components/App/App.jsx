@@ -3,6 +3,7 @@ import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import { Form } from 'components/Form';
 import { ListContacts } from 'components/ListContacts';
 import { Title } from 'components/Title';
+import { Phonebook, MainTitle } from "./App.styled"
 
 export class App extends Component {
   state = {
@@ -54,16 +55,8 @@ export class App extends Component {
     const visibleContacts = this.showContacts();
 
     return (
-      <div
-        style={{
-          height: '100vh',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <h1>My favorite</h1>
+      <Phonebook>
+        <MainTitle>My favorite</MainTitle>
         <Title
           title="Phonebook"
           children={
@@ -84,7 +77,7 @@ export class App extends Component {
             />
           }
         />
-      </div>
+      </Phonebook>
     );
   }
 }

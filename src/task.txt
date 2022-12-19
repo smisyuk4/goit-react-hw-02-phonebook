@@ -121,6 +121,11 @@ https://notiflix.github.io/report
 Розшир функціонал застосунку, дозволивши користувачеві видаляти раніше збережені контакти.
 
 Крок 7
+Іконки з бібліотеки
+https://www.npmjs.com/package/react-icons
+npm i react-icons
+
+Крок 8
 Стилізація через Emotion 
 https://www.youtube.com/watch?v=Itl8A6g4p4Y
 https://emotion.sh/docs/introduction

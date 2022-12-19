@@ -1,5 +1,6 @@
 import { Filter } from 'components/Filter';
 import { Contact } from 'components/Contact';
+import { BaseContacts, CollectionContacts } from './ListContacts.styled';
 
 export const ListContacts = ({
     arrayContacts,
@@ -8,9 +9,9 @@ export const ListContacts = ({
     onClickBtnRemove,
 }) => {
     return (
-        <div>
+        <BaseContacts>
             <Filter filterContact={filterContact} filter={filter} />
-            <ul>
+            <CollectionContacts>
                 {arrayContacts.map(item => (
                     <Contact
                         contact={item}
@@ -18,7 +19,7 @@ export const ListContacts = ({
                         onClickBtnRemove={onClickBtnRemove}
                     />
                 ))}
-            </ul>
-        </div>
+            </CollectionContacts>
+        </BaseContacts>
     );
 };

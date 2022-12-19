@@ -1,11 +1,22 @@
+import { IconContext } from 'react-icons';
+import { RiUserUnfollowFill } from 'react-icons/ri';
+
+import { ItemContact, ButtonRemoveContact } from './Contact.styled';
+
 export const Contact = ({ contact, onClickBtnRemove }) => {
     const { id, name, number } = contact;
     return (
-        <li>
+        <ItemContact>
             {name}: {number}
-            <button type="button" onClick={() => onClickBtnRemove(id)}>
+            <ButtonRemoveContact
+                type="button"
+                onClick={() => onClickBtnRemove(id)}
+            >
+                <IconContext.Provider value={{ className: 'global-icon' }}>
+                    <RiUserUnfollowFill />
+                </IconContext.Provider>
                 Remove
-            </button>
-        </li>
+            </ButtonRemoveContact>
+        </ItemContact>
     );
 };
